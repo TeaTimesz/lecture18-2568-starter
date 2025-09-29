@@ -164,7 +164,7 @@ router.post(
 );
 
 router.delete(
-  "/:studetnId",
+  "/:studentId",
   authenticateToken,
   checkRoleStudent,
   (req: CustomRequest, res: Response) => {
