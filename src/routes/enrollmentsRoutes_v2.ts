@@ -148,6 +148,11 @@ router.post(
       };
       enrollments.push(newEnrollment);
 
+      const foundIndex = students.findIndex(
+        (std) => std.studentId === req.params.studentId
+      );
+      students[foundIndex]?.courses?.push(body.courseId);
+
       return res.status(201).json({
         success: true,
         message: `Student ${req.params.studentId} && ${req.body.courseId} has been added successfully`,
