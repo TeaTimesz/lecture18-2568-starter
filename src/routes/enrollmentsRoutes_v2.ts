@@ -191,19 +191,40 @@ router.delete(
         })
       }
 
-      const foundIndex = enrollments.findIndex(
+      const foundIndex_enrollment = enrollments.findIndex(
         (std) => std.studentId === body.studentId
       );
 
-      if (foundIndex === -1) {
+      if (foundIndex_enrollment === -1) {
         return res.status(404).json({
           success: false,
           message: "Enrollment does not exists",
         });
       }
+      enrollments.splice(foundIndex_enrollment, 1);
 
-      // delete found student from array
-      students.splice(foundIndex, 1);
+            const foundIndex_student = students.findIndex(
+        (s) => s.studentId === req.params.studentId
+      );
+      if (foundIndex_student === -1) {
+        return res.status(404).json({
+          success: false,
+          message: "Student does not exists",
+        });
+      }
+      const foundIndex =
+        students[foundIndex_student]?.courses?.findIndex(
+          (c: string) => c === body.courseId
+        ) || -1;
+      if (foundIndex === -1) {
+        return res.status(404).json({
+          success: false,
+          message: "Course does not exists",
+        });
+      }
+
+      students[foundIndex_student]?.courses?.splice(foundIndex, 1);
+
       res.json({
         success: true,
         message: `Student ${req.params.studentId} && Course ${req.body.courseId} has been deleted successfully`,
