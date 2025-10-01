@@ -199,7 +199,6 @@ router.delete(
 
       // delete found student from array
       students.splice(foundIndex, 1);
-
       res.json({
         success: true,
         message: `Student ${req.params.studentId} && Course ${req.body.courseId} has been deleted successfully`,
